@@ -1,8 +1,9 @@
-package lk.ijse.possystemapispring.entity;
+package lk.ijse.possystemapispring.entity.Impl;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lk.ijse.possystemapispring.entity.SuperEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
