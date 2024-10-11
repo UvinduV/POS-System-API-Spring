@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class HealthCheckController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public String healthText(){
-        return "Note controller is working";
+        return "Pos system api is working";
     }
 }
