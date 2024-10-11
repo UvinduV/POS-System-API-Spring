@@ -3,6 +3,7 @@ package lk.ijse.possystemapispring.controller;
 import lk.ijse.possystemapispring.CustomStatusCode.SelectCustomerAndItemErrorStatus;
 import lk.ijse.possystemapispring.dto.CustomerStatus;
 import lk.ijse.possystemapispring.dto.Impl.CustomerDTO;
+import lk.ijse.possystemapispring.exception.CustomerNotFoundException;
 import lk.ijse.possystemapispring.exception.DataPersistException;
 import lk.ijse.possystemapispring.service.CustomerService;
 import lk.ijse.possystemapispring.util.RegexProcess;
@@ -46,5 +47,23 @@ public class CustomerController {
     public List<CustomerDTO> getAllCustomers(){
         return customerService.getAllCustomers();
     }
+    @PutMapping(value = "/{customerID}")
+    public ResponseEntity<Void> updateCustomer(@PathVariable ("customerID") String customerId,
+                                           @RequestBody CustomerDTO updateCustomerDTO){
+        try {
+            if (!RegexProcess.customerIdMatcher(customerId) || updateCustomerDTO == null){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            customerService.updateCustomer(customerId,updateCustomerDTO);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (CustomerNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
 
 }

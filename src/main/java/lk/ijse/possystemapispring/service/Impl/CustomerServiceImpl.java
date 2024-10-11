@@ -6,6 +6,7 @@ import lk.ijse.possystemapispring.dao.CustomerDao;
 import lk.ijse.possystemapispring.dto.CustomerStatus;
 import lk.ijse.possystemapispring.dto.Impl.CustomerDTO;
 import lk.ijse.possystemapispring.entity.Impl.CustomerEntity;
+import lk.ijse.possystemapispring.exception.CustomerNotFoundException;
 import lk.ijse.possystemapispring.exception.DataPersistException;
 import lk.ijse.possystemapispring.service.CustomerService;
 import lk.ijse.possystemapispring.util.AppUtil;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -47,5 +49,18 @@ public class CustomerServiceImpl implements CustomerService {
     public List<CustomerDTO> getAllCustomers() {
         List<CustomerEntity> AllCustomers=customerDao.findAll();
         return customerMapping.asCustomerDtoLIst(AllCustomers);
+    }
+
+    @Override
+    public void updateCustomer(String customerId, CustomerDTO customerDTO) {
+        Optional<CustomerEntity> findCustomer = customerDao.findById(customerId);
+        if (!findCustomer.isPresent()){
+            throw new CustomerNotFoundException("This id "+customerId+" has customer Not Found");
+        }else {
+            findCustomer.get().setCustomerName(customerDTO.getName());
+            findCustomer.get().setCustomerAddress(customerDTO.getAddress());
+            findCustomer.get().setCustomerContact(customerDTO.getContact());
+
+        }
     }
 }
