@@ -13,6 +13,8 @@ import lk.ijse.possystemapispring.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class CustomerServiceImpl implements CustomerService {
@@ -39,5 +41,11 @@ public class CustomerServiceImpl implements CustomerService {
         }else {
             return new SelectCustomerAndItemErrorStatus(2,"Search Customer not found");
         }
+    }
+
+    @Override
+    public List<CustomerDTO> getAllCustomers() {
+        List<CustomerEntity> AllCustomers=customerDao.findAll();
+        return customerMapping.asCustomerDtoLIst(AllCustomers);
     }
 }
