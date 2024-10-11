@@ -14,4 +14,5 @@ public interface CustomerService {
 
     void updateCustomer(String customerId, CustomerDTO customerDTO);
 
+    void deleteCustomer(String customerId);
 }

@@ -64,6 +64,20 @@ public class CustomerController {
         }
 
     }
-
+    @DeleteMapping(value = "/{customerID}")
+    public ResponseEntity<Void> deleteCustomer(@PathVariable ("customerID") String customerId){
+        try {
+            if (!RegexProcess.customerIdMatcher(customerId)){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            customerService.deleteCustomer(customerId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (CustomerNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
 }
