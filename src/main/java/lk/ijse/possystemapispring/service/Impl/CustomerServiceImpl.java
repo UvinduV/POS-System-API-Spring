@@ -1,7 +1,9 @@
 package lk.ijse.possystemapispring.service.Impl;
 
 import jakarta.transaction.Transactional;
+import lk.ijse.possystemapispring.CustomStatusCode.SelectCustomerAndItemErrorStatus;
 import lk.ijse.possystemapispring.dao.CustomerDao;
+import lk.ijse.possystemapispring.dto.CustomerStatus;
 import lk.ijse.possystemapispring.dto.Impl.CustomerDTO;
 import lk.ijse.possystemapispring.entity.Impl.CustomerEntity;
 import lk.ijse.possystemapispring.exception.DataPersistException;
@@ -27,5 +29,15 @@ public class CustomerServiceImpl implements CustomerService {
             throw new DataPersistException("Customer not saved");
         }
 
+    }
+
+    @Override
+    public CustomerStatus searchCustomer(String customerId) {
+        if(customerDao.existsById(customerId)){
+            var selectedCustomer = customerDao.getReferenceById(customerId);
+            return customerMapping.toCustomerDTO(selectedCustomer);
+        }else {
+            return new SelectCustomerAndItemErrorStatus(2,"Search Customer not found");
+        }
     }
 }
