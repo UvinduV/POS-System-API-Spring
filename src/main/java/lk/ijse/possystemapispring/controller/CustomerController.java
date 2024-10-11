@@ -41,7 +41,6 @@ public class CustomerController {
             return new SelectCustomerAndItemErrorStatus(1,"Customer ID is not valid");
         }
         return customerService.searchCustomer(customerId);
-
     }
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CustomerDTO> getAllCustomers(){
