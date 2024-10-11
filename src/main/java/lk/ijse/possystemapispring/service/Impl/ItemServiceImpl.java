@@ -1,8 +1,10 @@
 package lk.ijse.possystemapispring.service.Impl;
 
 import jakarta.transaction.Transactional;
+import lk.ijse.possystemapispring.CustomStatusCode.SelectCustomerAndItemErrorStatus;
 import lk.ijse.possystemapispring.dao.ItemDao;
 import lk.ijse.possystemapispring.dto.Impl.ItemDTO;
+import lk.ijse.possystemapispring.dto.ItemStatus;
 import lk.ijse.possystemapispring.entity.Impl.CustomerEntity;
 import lk.ijse.possystemapispring.entity.Impl.ItemEntity;
 import lk.ijse.possystemapispring.exception.DataPersistException;
@@ -26,6 +28,16 @@ public class ItemServiceImpl implements ItemService {
                 itemDao.save(itemMapping.toItemEntity(itemDTO));
         if(savedItem == null){
             throw new DataPersistException("Item not saved");
+        }
+    }
+
+    @Override
+    public ItemStatus searchItem(String itemId) {
+        if(itemDao.existsById(itemId)){
+            var selectedItem = itemDao.getReferenceById(itemId);
+            return itemMapping.toItemDTO(selectedItem);
+        }else {
+            return new SelectCustomerAndItemErrorStatus(2,"Search Item not found");
         }
     }
 }
