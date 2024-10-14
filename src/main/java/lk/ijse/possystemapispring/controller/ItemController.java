@@ -1,8 +1,6 @@
 package lk.ijse.possystemapispring.controller;
 
 import lk.ijse.possystemapispring.CustomStatusCode.SelectCustomerAndItemErrorStatus;
-import lk.ijse.possystemapispring.dto.CustomerStatus;
-import lk.ijse.possystemapispring.dto.Impl.CustomerDTO;
 import lk.ijse.possystemapispring.dto.Impl.ItemDTO;
 import lk.ijse.possystemapispring.dto.ItemStatus;
 import lk.ijse.possystemapispring.exception.DataPersistException;
@@ -13,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/items")
@@ -38,5 +38,9 @@ public class ItemController {
             return new SelectCustomerAndItemErrorStatus(1,"Item ID is not valid");
         }
         return itemService.searchItem(itemId);
+    }
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<ItemDTO> getAllItems(){
+        return itemService.getAllItems();
     }
 }

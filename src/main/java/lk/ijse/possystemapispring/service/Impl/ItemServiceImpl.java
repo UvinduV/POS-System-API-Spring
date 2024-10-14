@@ -14,6 +14,8 @@ import lk.ijse.possystemapispring.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class ItemServiceImpl implements ItemService {
@@ -39,5 +41,11 @@ public class ItemServiceImpl implements ItemService {
         }else {
             return new SelectCustomerAndItemErrorStatus(2,"Search Item not found");
         }
+    }
+
+    @Override
+    public List<ItemDTO> getAllItems() {
+        List<ItemEntity>allItems=itemDao.findAll();
+        return itemMapping.asItemDtoLIst(allItems);
     }
 }
