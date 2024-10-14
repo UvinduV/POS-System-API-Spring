@@ -11,4 +11,6 @@ public interface ItemService {
     ItemStatus searchItem(String itemId);
 
     List<ItemDTO> getAllItems();
+
+    void updateItem(String itemId, ItemDTO updateItemDto);
 }

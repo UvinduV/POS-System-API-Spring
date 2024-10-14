@@ -4,6 +4,7 @@ import lk.ijse.possystemapispring.CustomStatusCode.SelectCustomerAndItemErrorSta
 import lk.ijse.possystemapispring.dto.Impl.ItemDTO;
 import lk.ijse.possystemapispring.dto.ItemStatus;
 import lk.ijse.possystemapispring.exception.DataPersistException;
+import lk.ijse.possystemapispring.exception.ItemNotFoundException;
 import lk.ijse.possystemapispring.service.ItemService;
 import lk.ijse.possystemapispring.util.RegexProcess;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +43,21 @@ public class ItemController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ItemDTO> getAllItems(){
         return itemService.getAllItems();
+    }
+
+    @PutMapping(value = "/{itemID}")
+    public ResponseEntity<Void> updateItem(@PathVariable ("itemID") String itemId,
+                                           @RequestBody ItemDTO updateItemDto){
+        try{
+            if (!RegexProcess.itemIdMatcher(itemId) || updateItemDto==null) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            itemService.updateItem(itemId,updateItemDto);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (ItemNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
     }
 }
