@@ -13,4 +13,6 @@ public interface ItemService {
     List<ItemDTO> getAllItems();
 
     void updateItem(String itemId, ItemDTO updateItemDto);
+
+    void deleteItem(String itemId);
 }

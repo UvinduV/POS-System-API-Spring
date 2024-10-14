@@ -57,7 +57,24 @@ public class ItemController {
         }catch (ItemNotFoundException e){
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
+    }
+    @DeleteMapping(value = "/{itemID}")
+    public ResponseEntity<Void> deleteItem(@PathVariable ("itemID") String itemId){
+        try {
+            if (!RegexProcess.itemIdMatcher(itemId)) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            itemService.deleteItem(itemId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (ItemNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }
