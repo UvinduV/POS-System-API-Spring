@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name = "orderDetails")
+@IdClass(OrderDetailEntity.class)
 public class OrderDetailEntity implements SuperEntity {
     @Id
     @ManyToOne
