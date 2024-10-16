@@ -2,8 +2,12 @@ package lk.ijse.possystemapispring.util;
 
 import lk.ijse.possystemapispring.dto.Impl.CustomerDTO;
 import lk.ijse.possystemapispring.dto.Impl.ItemDTO;
+import lk.ijse.possystemapispring.dto.Impl.OrderDTO;
+import lk.ijse.possystemapispring.dto.Impl.OrderDetailsDTO;
 import lk.ijse.possystemapispring.entity.Impl.CustomerEntity;
 import lk.ijse.possystemapispring.entity.Impl.ItemEntity;
+import lk.ijse.possystemapispring.entity.Impl.OrderDetailEntity;
+import lk.ijse.possystemapispring.entity.Impl.OrderEntity;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +39,21 @@ public class Mapping {
     }
     public List<ItemDTO> asItemDtoLIst(List<ItemEntity> itemEntityList){
         return modelMapper.map(itemEntityList, new TypeToken<List<ItemDTO>>() {}.getType());
+    }
+
+    //Orders
+    public OrderEntity toOrderEntity(OrderDTO orderDTO){
+        return modelMapper.map(orderDTO, OrderEntity.class);
+    }
+    public OrderDTO toOrderDTO(OrderEntity orderEntity){
+        return modelMapper.map(orderEntity, OrderDTO.class);
+    }
+
+    //Order Details
+    public OrderDetailEntity toOrderDetailEntity(OrderDetailsDTO orderDetailsDTO){
+        return modelMapper.map(orderDetailsDTO, OrderDetailEntity.class);
+    }
+    public OrderDetailsDTO toOrderDetailDTO(OrderDetailEntity orderDetailEntity){
+        return modelMapper.map(orderDetailEntity, OrderDetailsDTO.class);
     }
 }
