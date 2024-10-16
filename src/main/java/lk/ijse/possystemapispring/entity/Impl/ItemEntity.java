@@ -2,11 +2,14 @@ package lk.ijse.possystemapispring.entity.Impl;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lk.ijse.possystemapispring.entity.SuperEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,4 +22,6 @@ public class ItemEntity implements SuperEntity {
     private String ItemName;
     private int qty;
     private double unitPrice;
+    @OneToMany(mappedBy = "item")
+    private List<OrderEntity> orders;
 }

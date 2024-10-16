@@ -14,7 +14,8 @@ public class OrderDTO implements OrderStatus {
     private String orderId;
     private String customerId;
     private String date;
+    private double netTotal;
     private double discount;
-    private double sub_total;
+    private double subTotal;
     private List<OrderDetailsDTO> orderDetails;
 }
