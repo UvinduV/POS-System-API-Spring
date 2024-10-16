@@ -3,6 +3,7 @@ package lk.ijse.possystemapispring.service.Impl;
 import jakarta.transaction.Transactional;
 import lk.ijse.possystemapispring.CustomStatusCode.SelectCustomerAndItemErrorStatus;
 import lk.ijse.possystemapispring.dao.ItemDao;
+import lk.ijse.possystemapispring.dao.OrderDao;
 import lk.ijse.possystemapispring.dto.Impl.ItemDTO;
 import lk.ijse.possystemapispring.dto.ItemStatus;
 import lk.ijse.possystemapispring.entity.Impl.ItemEntity;
@@ -24,6 +25,7 @@ public class ItemServiceImpl implements ItemService {
     private ItemDao itemDao;
     @Autowired
     private Mapping itemMapping;
+
     @Override
     public void saveItem(ItemDTO itemDTO) {
         itemDTO.setId(AppUtil.generateItemId());

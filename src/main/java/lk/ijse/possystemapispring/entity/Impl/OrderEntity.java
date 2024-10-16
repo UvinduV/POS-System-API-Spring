@@ -17,11 +17,12 @@ public class OrderEntity implements SuperEntity {
     @Id
     private String orderId;
     @ManyToOne
-    @JoinColumn(name = "CustomerId",nullable = false)
+    @JoinColumn(name = "CustomerId",referencedColumnName = "customerId")
     private CustomerEntity customer;
     private String date;
     private double netTotal;
     private double discount;
     private double subTotal;
+    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<OrderDetailEntity> orderDetails;
 }

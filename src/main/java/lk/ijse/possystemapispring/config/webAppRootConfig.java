@@ -45,7 +45,7 @@ public class webAppRootConfig {
 
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean(); //entity manager factory bootstrap kara atha.
         factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan("lk/ijse/possystemapispring/entity");
+        factory.setPackagesToScan("lk/ijse/possystemapispring/entity/Impl");
         factory.setDataSource(dataSource());
         return factory;
     }
