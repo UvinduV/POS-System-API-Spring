@@ -1,7 +1,7 @@
 package lk.ijse.possystemapispring.service.Impl;
 
 import jakarta.transaction.Transactional;
-import lk.ijse.possystemapispring.CustomStatusCode.SelectCustomerAndItemErrorStatus;
+import lk.ijse.possystemapispring.CustomStatusCode.SelectCustomerAndItemAndOrderErrorStatus;
 import lk.ijse.possystemapispring.dao.CustomerDao;
 import lk.ijse.possystemapispring.dto.CustomerStatus;
 import lk.ijse.possystemapispring.dto.Impl.CustomerDTO;
@@ -41,7 +41,7 @@ public class CustomerServiceImpl implements CustomerService {
             var selectedCustomer = customerDao.getReferenceById(customerId);
             return customerMapping.toCustomerDTO(selectedCustomer);
         }else {
-            return new SelectCustomerAndItemErrorStatus(2,"Search Customer not found");
+            return new SelectCustomerAndItemAndOrderErrorStatus(2,"Search Customer not found");
         }
     }
 

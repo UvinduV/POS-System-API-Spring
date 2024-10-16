@@ -1,6 +1,6 @@
 package lk.ijse.possystemapispring.controller;
 
-import lk.ijse.possystemapispring.CustomStatusCode.SelectCustomerAndItemErrorStatus;
+import lk.ijse.possystemapispring.CustomStatusCode.SelectCustomerAndItemAndOrderErrorStatus;
 import lk.ijse.possystemapispring.dto.CustomerStatus;
 import lk.ijse.possystemapispring.dto.Impl.CustomerDTO;
 import lk.ijse.possystemapispring.exception.CustomerNotFoundException;
@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("api/v1/customers")
@@ -38,7 +37,7 @@ public class CustomerController {
     @GetMapping(value = "/{customerID}",produces = MediaType.APPLICATION_JSON_VALUE)
     public CustomerStatus searchCustomer(@PathVariable ("customerID") String customerId){
         if (!RegexProcess.customerIdMatcher(customerId)) {
-            return new SelectCustomerAndItemErrorStatus(1,"Customer ID is not valid");
+            return new SelectCustomerAndItemAndOrderErrorStatus(1,"Customer ID is not valid");
         }
         return customerService.searchCustomer(customerId);
     }

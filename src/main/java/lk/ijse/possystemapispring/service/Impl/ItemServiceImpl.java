@@ -1,9 +1,8 @@
 package lk.ijse.possystemapispring.service.Impl;
 
 import jakarta.transaction.Transactional;
-import lk.ijse.possystemapispring.CustomStatusCode.SelectCustomerAndItemErrorStatus;
+import lk.ijse.possystemapispring.CustomStatusCode.SelectCustomerAndItemAndOrderErrorStatus;
 import lk.ijse.possystemapispring.dao.ItemDao;
-import lk.ijse.possystemapispring.dao.OrderDao;
 import lk.ijse.possystemapispring.dto.Impl.ItemDTO;
 import lk.ijse.possystemapispring.dto.ItemStatus;
 import lk.ijse.possystemapispring.entity.Impl.ItemEntity;
@@ -42,7 +41,7 @@ public class ItemServiceImpl implements ItemService {
             var selectedItem = itemDao.getReferenceById(itemId);
             return itemMapping.toItemDTO(selectedItem);
         }else {
-            return new SelectCustomerAndItemErrorStatus(2,"Search Item not found");
+            return new SelectCustomerAndItemAndOrderErrorStatus(2,"Search Item not found");
         }
     }
 
