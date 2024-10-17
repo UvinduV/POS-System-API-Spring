@@ -7,6 +7,8 @@ import lk.ijse.possystemapispring.exception.DataPersistException;
 import lk.ijse.possystemapispring.exception.ItemNotFoundException;
 import lk.ijse.possystemapispring.service.ItemService;
 import lk.ijse.possystemapispring.util.RegexProcess;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,15 +22,19 @@ import java.util.List;
 public class ItemController {
     @Autowired
     private ItemService itemService;
+    private static Logger logger= LoggerFactory.getLogger(ItemController.class);
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveItem(@RequestBody ItemDTO itemDTO){
         try {
             itemService.saveItem(itemDTO);
+            logger.info("Item saved successfully!");
             return new ResponseEntity<>(HttpStatus.CREATED);
         }catch (DataPersistException e){
+            logger.error("Item saved fail!"+e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }catch (Exception e){
+            logger.error("Item saved fail!"+e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
@@ -36,6 +42,7 @@ public class ItemController {
     @GetMapping(value = "/{itemID}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ItemStatus searchItem(@PathVariable ("itemID") String itemId){
         if (!RegexProcess.itemIdMatcher(itemId)) {
+            logger.error("Item search fail!");
             return new SelectCustomerAndItemAndOrderErrorStatus(1,"Item ID is not valid");
         }
         return itemService.searchItem(itemId);
@@ -53,11 +60,13 @@ public class ItemController {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
             itemService.updateItem(itemId,updateItemDto);
+            logger.info("Item updated successfully!");
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (ItemNotFoundException e){
-            e.printStackTrace();
+            logger.error("Item not found!"+e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }catch (Exception e){
+            logger.error("Item not found!"+e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
@@ -69,11 +78,13 @@ public class ItemController {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
             itemService.deleteItem(itemId);
+            logger.info("Item Deleted successfully!");
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (ItemNotFoundException e){
-            e.printStackTrace();
+            logger.error("Item not found!"+e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }catch (Exception e){
+            logger.error("Item not found!"+e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
