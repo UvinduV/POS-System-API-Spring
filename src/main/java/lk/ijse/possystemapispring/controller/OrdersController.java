@@ -1,10 +1,15 @@
 package lk.ijse.possystemapispring.controller;
 
+import lk.ijse.possystemapispring.CustomStatusCode.SelectCustomerAndItemAndOrderErrorStatus;
+import lk.ijse.possystemapispring.dto.CustomerStatus;
 import lk.ijse.possystemapispring.dto.Impl.OrderDTO;
 import lk.ijse.possystemapispring.dto.Impl.RequestOrderDTO;
+import lk.ijse.possystemapispring.dto.OrderDetailsStatus;
+import lk.ijse.possystemapispring.dto.OrderStatus;
 import lk.ijse.possystemapispring.entity.Impl.OrderEntity;
 import lk.ijse.possystemapispring.exception.DataPersistException;
 import lk.ijse.possystemapispring.service.OrderService;
+import lk.ijse.possystemapispring.util.RegexProcess;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/orders")
+@CrossOrigin
 public class OrdersController {
     @Autowired
     private OrderService orderService;
@@ -39,6 +45,14 @@ public class OrdersController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<OrderDTO> getAllOrders(){
         return orderService.getAllOrders();
+    }
+    @GetMapping(value = "/{OrderID}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public OrderDetailsStatus searchOrder(@PathVariable ("OrderID") String orderId){
+        /*if (!RegexProcess.customerIdMatcher(orderId)) {
+            logger.error("Order search fail!");
+            return new SelectCustomerAndItemAndOrderErrorStatus(1,"Customer ID is not valid");
+        }*/
+        return orderService.searchOrder(orderId);
     }
 
 }

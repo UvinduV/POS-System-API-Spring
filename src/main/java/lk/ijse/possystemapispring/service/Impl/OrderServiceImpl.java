@@ -1,11 +1,15 @@
 package lk.ijse.possystemapispring.service.Impl;
 
+import lk.ijse.possystemapispring.CustomStatusCode.SelectCustomerAndItemAndOrderErrorStatus;
 import lk.ijse.possystemapispring.dao.CustomerDao;
 import lk.ijse.possystemapispring.dao.ItemDao;
 import lk.ijse.possystemapispring.dao.OrderDao;
 import lk.ijse.possystemapispring.dao.OrderDetailDao;
+import lk.ijse.possystemapispring.dto.CustomerStatus;
 import lk.ijse.possystemapispring.dto.Impl.OrderDTO;
 import lk.ijse.possystemapispring.dto.Impl.OrderDetailsDTO;
+import lk.ijse.possystemapispring.dto.OrderDetailsStatus;
+import lk.ijse.possystemapispring.dto.OrderStatus;
 import lk.ijse.possystemapispring.entity.Impl.CustomerEntity;
 import lk.ijse.possystemapispring.entity.Impl.ItemEntity;
 import lk.ijse.possystemapispring.entity.Impl.OrderDetailEntity;
@@ -79,4 +83,16 @@ public class OrderServiceImpl implements OrderService {
         List<OrderEntity> allOrders=orderDao.findAll();
         return orderMapping.asOrderDtoLIst(allOrders);
     }
+
+    @Override
+    public OrderDetailsStatus searchOrder(String orderId) {
+        if(orderDetailDao.existsById(orderId)){
+            var selectedOrder = orderDetailDao.getReferenceById(orderId);
+            return orderMapping.toOrderDetailDTO(selectedOrder);
+        }else {
+            return new SelectCustomerAndItemAndOrderErrorStatus(2,"Search order not found");
+        }
+    }
+
+
 }
