@@ -48,6 +48,9 @@ public class Mapping {
     public OrderDTO toOrderDTO(OrderEntity orderEntity){
         return modelMapper.map(orderEntity, OrderDTO.class);
     }
+    public List<OrderDTO> asOrderDtoLIst(List<OrderEntity> orderEntityList){
+        return modelMapper.map(orderEntityList, new TypeToken<List<OrderDTO>>() {}.getType());
+    }
 
     //Order Details
     public OrderDetailEntity toOrderDetailEntity(OrderDetailsDTO orderDetailsDTO){
@@ -56,4 +59,5 @@ public class Mapping {
     public OrderDetailsDTO toOrderDetailDTO(OrderDetailEntity orderDetailEntity){
         return modelMapper.map(orderDetailEntity, OrderDetailsDTO.class);
     }
+
 }

@@ -73,4 +73,10 @@ public class OrderServiceImpl implements OrderService {
         }
 
     }
+
+    @Override
+    public List<OrderDTO> getAllOrders() {
+        List<OrderEntity> allOrders=orderDao.findAll();
+        return orderMapping.asOrderDtoLIst(allOrders);
+    }
 }
